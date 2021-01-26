@@ -4,6 +4,7 @@ import { initDB } from 'react-indexed-db';
 import {DBConfig} from "../db/DBConfig";
 import {IndexedDB} from "react-indexed-db";
 import DetailPage from "./DetailPage";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 initDB(DBConfig);
 
 function MainPage() {
@@ -23,7 +24,9 @@ function MainPage() {
                     ]
                 }
             ]}>
-            <DetailPage/>
+            <Router>
+                <Route exact path="/projects/workflowy" component={DetailPage}/>
+            </Router>
         </IndexedDB>
     );
 }
