@@ -6,7 +6,7 @@ function DetailPage() {
     const {getAll, add, update, deleteRecord} = useIndexedDB('item');
     const [items, setItems] = useState([]);
     const [updateCount, setUpdateCount] = useState(0);
-    const handleKeyPress = (event, item,index) => {
+    const handleKeyPress = (event, item, index) => {
         if (event.key.toLowerCase() === "tab") {
             event.preventDefault();
         }
@@ -24,12 +24,12 @@ function DetailPage() {
         }
         if (event.key.toLowerCase() === 'enter') {
             console.log('enter press here! ' + event.key + "  id=" + item.id);
-            addItem("", item.index, item.date + 100,item.parentId);
+            addItem("", item.index, item.date + 100, item.parentId);
         }
-        if (event.key.toLowerCase() === 'tab'&&event.shiftKey) {
+        if (event.key.toLowerCase() === 'tab' && event.shiftKey) {
             handleShiftToParent(item);
-        }else if (event.key.toLowerCase() === 'tab') {
-            handleShiftToChild(item,index);
+        } else if (event.key.toLowerCase() === 'tab') {
+            handleShiftToChild(item, index);
         }
     }
 
@@ -57,19 +57,19 @@ function DetailPage() {
             setUpdateCount(updateCount + 1);
         });
     }
-    const handleShiftToChild = (item,index) => {
+    const handleShiftToChild = (item, index) => {
         update({
             id: item.id,
             title: item.title,
             index: item.index,
-            parentId: index===0?0:items[index-1].id,
+            parentId: index === 0 ? 0 : items[index - 1].id,
             date: item.date
         }).then(event => {
             setUpdateCount(updateCount + 1);
         });
     }
     const handleAddChild = (e, item) => {
-        add({title: "", index: item.index, parentId: item.id, date: item.date+1}).then(
+        add({title: "", index: item.index, parentId: item.id, date: item.date + 1}).then(
             event => {
                 console.log('child ID Generated: ', event.target);
                 setUpdateCount(updateCount + 1);
@@ -80,7 +80,7 @@ function DetailPage() {
         );
     }
 
-    const addItem = (title, pos, date,parentId) => {
+    const addItem = (title, pos, date, parentId) => {
         console.log("pos=" + pos)
         add({title: title, index: pos, parentId: parentId, date: date}).then(
             event => {
@@ -118,23 +118,34 @@ function DetailPage() {
                             return 0;
                         }
                     }
-                ).map((it,index) => (
-                    <MainComponent itemIndex={index} key={it.id} details={items.filter(et => et.parentId === it.id)} item={it}
+                ).map((it, index) => (
+                    <MainComponent itemIndex={index} key={it.id} details={items.filter(et => et.parentId === it.id)}
+                                   item={it}
                                    callback={handleKeyPress} change={handleChangeInput}
                                    addChild={handleAddChild}
                     />
                 ))
                 :
                 null}
-            <div onClick={() => {
+            <button onClick={() => {
                 if (items.length > 0) {
-                    addItem("", (items[items.length - 1].index + 1), new Date().getTime(),0);
+                    addItem("", (items[items.length - 1].index + 1), new Date().getTime(), 0);
                 } else {
-                    addItem("", 1, new Date().getTime(),0);
+                    addItem("", 1, new Date().getTime(), 0);
                 }
             }}
-                 style={{margin: "1rem", fontSize: "2.5rem", color: "black"}}>+
-            </div>
+                    style={{
+                        margin: "1rem",
+                        border:"white",
+                        borderColor: "white",
+                        backgroundColor: "white",
+                        borderRadius: "1.5rem",
+                        width: "3rem",
+                        height: "3rem",
+                        fontSize: "3rem",
+                        color: "black"
+                    }}>+
+            </button>
         </div>
     );
 }

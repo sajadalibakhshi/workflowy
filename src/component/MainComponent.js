@@ -7,7 +7,7 @@ class MainComponent extends Component {
         return (
             <div style={{display: "flex", flexDirection: "column"}}>
                 <div style={{display: "flex", flexDirection: "row"}}>
-                    <div style={{
+                    <button style={{
                         width: "1rem",
                         height: "1rem",
                         margin: ".8rem",
@@ -20,6 +20,8 @@ class MainComponent extends Component {
                             width: "8rem",
                             border: "none",
                             boxShadow: 0,
+                            fontSize:"1rem",
+                            color:"black",
                             borderBottom: "1px solid lightgray"
                         }}
                         defaultValue={this.props.item.title}
