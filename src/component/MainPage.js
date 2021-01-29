@@ -25,7 +25,7 @@ function MainPage() {
                 }
             ]}>
             <Router>
-                <Route exact path="/projects/workflowy" component={DetailPage}/>
+                <Route exact path="/" component={DetailPage}/>
             </Router>
         </IndexedDB>
     );
